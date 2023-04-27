@@ -1,6 +1,7 @@
 kopf :: String -> Char
 kopf s = head s
 -- kopf = head
+-- kopf s = s !! 0
 
 ende :: [Char] -> Char
 ende s = last s
