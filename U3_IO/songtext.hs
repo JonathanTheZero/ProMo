@@ -1,5 +1,6 @@
 import Data.Char
 import System.IO
+import Distribution.TestSuite (TestInstance(name))
 
 -- why???
 {-
