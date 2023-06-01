@@ -26,5 +26,7 @@ f = \n -> if immer_null (quadrat n) /= n then summe_quadrate (n - 2) (n - 1) els
     if 0 /= 3 then 5 else 3
     5
 
+    Korrektur: then Zweig wird erst ausgewertet, wenn if Bedingung zu True evaluiert wurde (oben muss noch angepasst werden)
+
     Vorteil normaler Auswertung: immer_null (quadrat n) wird sofort zu 0, dadurch wird insgesamt deutlich weniger in der Bedingung ausgewertet
 -}
