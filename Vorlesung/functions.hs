@@ -8,4 +8,4 @@ f x y = 2 * x + 3 * y
 z :: Integer -> Integer -> Integer
 z = flip f
 y :: Integer -> Integer -> Integer
-y = \x -> f x
+y = (\x -> f x)
