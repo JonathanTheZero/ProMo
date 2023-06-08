@@ -29,3 +29,6 @@ isAlive a = state a == Alive
 
 isDead :: Astronaut -> Bool
 isDead a = state a == Dead
+
+crewGewonnen :: [Astronaut] -> Bool
+crewGewonnen xs = null ([x | x <- xs, isImpostor x, isAlive x]) && not (null ([x | x <- xs, isCrewmate x, isAlive x]))
