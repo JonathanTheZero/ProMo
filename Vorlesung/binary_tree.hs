@@ -51,3 +51,20 @@ infixCollAkk b = col b []
   where
     col L akk = akk
     col (K w l r) akk = col l (w : col r akk)
+
+tiefendurchlauf :: b -> (a -> b -> b -> b) -> BB a -> b
+tiefendurchlauf wL fK L = wL
+tiefendurchlauf wL fK (K w l r) = fK w (tiefendurchlauf wL fK l) (tiefendurchlauf wL fK r)
+
+_infix :: BB a -> [a]
+_infix = tiefendurchlauf [] (\w l1 l2 -> l1 ++ [w] ++ l2)
+_prefix :: BB a -> [a]
+_prefix = tiefendurchlauf [] (\w l1 l2 -> [w] ++ l1 ++ l2)
+
+breitendurchlauf :: BB a -> [a]
+breitendurchlauf baum = hb [baum]
+  where
+    hb :: [BB a] -> [a]
+    hb [] = []
+    hb (L : list) = hb list
+    hb (K w l r : list) = w : hb (list ++ [l, r])
