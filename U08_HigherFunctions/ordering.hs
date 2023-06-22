@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
+
 import Data.List (sort)
 
 data Team = Team
@@ -24,6 +26,7 @@ schalke :: Team
 schalke = Team "Schalke 04" 01 10 10 15 50
 
 instance Ord Team where
+    -- sorts descending
     compare :: Team -> Team -> Ordering
     compare a b
         | points a > points b = LT
@@ -34,6 +37,14 @@ instance Ord Team where
         | name a > name b = GT
         | name a < name b = LT
         | otherwise = EQ
+    -- Monoid implementation
+    {-compare t1 t2 =
+        compare (points t1) (points t2)
+            `mappend` compare (goalDifference t1) (goalDifference t2)
+            `mappend` compare (bestTeam t1) (bestTeam t2)
+            `mappend` compare (name t1) (name t2)
+      where
+        bestTeam t = name t == "Bayern Muenchen"-}
 
 points :: Team -> Int
 points t = 3 * nW t + nD t
@@ -44,4 +55,5 @@ goalDifference t = nGF t - nGA t
 bundesliga :: [Team]
 bundesliga = [bayern, berlin, schalke, dortmund, leipzig, wolfsburg]
 
+sortedLeague :: [Team]
 sortedLeague = sort bundesliga
