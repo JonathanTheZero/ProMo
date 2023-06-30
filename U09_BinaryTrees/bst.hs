@@ -35,6 +35,14 @@ insert el (K w l r)
     | el < w = K w (insert el l) r
     | el > w = K w l (insert el r)
 
+-- Korrektur aus Tutorium
+insert' :: Ord a => a -> BB a -> BB a
+insert' e L = K e L L
+insert' e (K w l r)
+    | e > w = K w l (insert e r)
+    | e < w = K w (insert e l) r
+    | otherwise = K w l r
+
 elem' :: Ord a => a -> BB a -> Bool
 elem' el L = False
 elem' el (K w l r)
@@ -42,7 +50,7 @@ elem' el (K w l r)
     | el < w = elem' el l
     | el > w = elem' el r
 
-leaves :: Num a =>BB b -> a
+leaves :: Num a => BB b -> a
 leaves L = 0
 leaves (K w L L) = 1
 leaves (K w l r) = leaves l + leaves r

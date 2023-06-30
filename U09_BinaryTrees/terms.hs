@@ -13,12 +13,12 @@ operator :: Fractional a => Operation -> a -> a -> a
 operator Times = (*)
 operator Plus = (+)
 operator Minus = (-)
-operator Division = (/)
+operator Division = (/) -- rauslassen bei Integral
 
 eval :: Fractional a => Term a -> a
 eval (C x) = x
 eval (UnaryTerm Negate t) = (-1) * eval t
-eval (BinaryTerm op a b) = (operator op) (eval a) (eval b)
+eval (BinaryTerm op a b) = (operator op) (eval a) (eval b) --special case mit eval t1 `div` eval t2
 
 y :: Fractional a => Term a
 y =
