@@ -1,3 +1,7 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+
+{-# HLINT ignore "Redundant bracket" #-}
+
 data Triple a = Triple a a a deriving (Eq)
 
 instance (Show a) => Show (Triple a) where
@@ -11,7 +15,8 @@ instance Functor Triple where
 instance Applicative Triple where
     pure :: a -> Triple a
     pure a = Triple a a a
-    
+    (<*>) :: Triple (a -> b) -> Triple a -> Triple b
+    (Triple a b c) <*> (Triple d e f) = Triple (a d) (b e) (c f)
 
 tfst :: Triple a -> a
 tfst (Triple t _ _) = t
@@ -33,4 +38,17 @@ x :: Num a => Triple a -> Triple a -> Triple a
 (Triple a b c) `x` (Triple d e f) = Triple (b * f - c * e) (c * d - a * f) (a * e - b * d)
 
 scaMult :: Num a => a -> Triple a -> Triple a
-scaMult s = fmap (*s)
+scaMult s = fmap (* s)
+
+o :: Num a => Triple a -> Triple a -> a
+(Triple a b c) `o` (Triple d e f) = a * d + b * e + c * f
+
+tripleAdd :: Num a => Triple a -> Triple a -> Triple a
+-- tripleAdd (Triple a b c) (Triple d e f) = Triple (a + d) (b + e) (c + f)
+tripleAdd t1 t2 = (fmap (+)) t1 <*> t2
+
+tripleSub :: Num a => Triple a -> Triple a -> Triple a
+tripleSub t1 t2 = (fmap (-)) t1 <*> t2
+
+tlength :: Floating a => Triple a -> a
+tlength (Triple a b c) = sqrt (a ^ 2 + b ^ 2 + c ^ 2)
