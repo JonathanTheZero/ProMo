@@ -31,6 +31,10 @@ tripleFromList list
     | length list == 2 = Triple (head list) (list !! 2) (list !! 2)
     | otherwise = Triple (head list) (list !! 2) (list !! 3)
 
+tripleFromList' :: [a] -> Triple a
+tripleFromList' (x:y:z:_) = Triple x y z
+tripleFromList' _ = error "Unable to convert to Triple"
+
 tripleToList :: Triple a -> [a]
 tripleToList t = [tfst t, tsnd t, ttrd t]
 
@@ -42,6 +46,9 @@ scaMult s = fmap (* s)
 
 o :: Num a => Triple a -> Triple a -> a
 (Triple a b c) `o` (Triple d e f) = a * d + b * e + c * f
+
+o' :: Num a => Triple a -> Triple a -> a
+o' t1 t2 = sum (tripleToList ((*) <$> t1 <*> t2))
 
 tripleAdd :: Num a => Triple a -> Triple a -> Triple a
 -- tripleAdd (Triple a b c) (Triple d e f) = Triple (a + d) (b + e) (c + f)

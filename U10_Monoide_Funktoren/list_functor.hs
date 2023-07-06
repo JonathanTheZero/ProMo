@@ -21,6 +21,7 @@ instance Applicative List where
     _ <*> Nil = Nil
     Nil <*> _ = Nil
     --(Cons f fs) <*> (Cons x xs) = (pure (f x)) `conc` (fs <*> xs) --Implementierung nach Aufgabenstellung
+    --(Cons f fs) <*> (Cons x xs) = Cons (f x) (fs <*> xs) kürzere Implementierung nach Aufgabenstellung
     (Cons f fs) <*> xs = fmap f xs `conc` (fs <*> xs) --Sinnvolle Implementierung
     pure :: a -> List a
     pure x = Cons x Nil
